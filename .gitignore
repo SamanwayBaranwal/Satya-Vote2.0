@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+frontend/node_modules/
+
+# env
+.env
+frontend/.env
+frontend/.env.local
+
+# hardhat
+artifacts/
+cache/
+typechain-types/
+
+# vite / build
+frontend/dist/
+dist/
+
+# misc
+.DS_Store
+*.log
+coverage/
+coverage.json

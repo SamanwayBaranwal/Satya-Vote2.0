@@ -1,0 +1,21 @@
+{
+  "name": "satya-vote-contracts",
+  "version": "2.0.0",
+  "description": "Satya Vote 2.0 — blockchain voting smart contracts. Ek Vote, Ek Sach.",
+  "type": "commonjs",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "node": "hardhat node",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
+    "verify:sepolia": "hardhat verify --network sepolia"
+  },
+  "keywords": ["blockchain", "voting", "ethereum", "solidity", "hardhat"],
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.22.10"
+  }
+}
