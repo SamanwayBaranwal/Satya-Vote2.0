@@ -32,6 +32,7 @@ contract SatyaVote {
         uint256 id;
         string title;
         string organization;
+        string electionType; // "country" | "state" | "panchayat" | "school"
         uint256 startTime; // unix seconds
         uint256 endTime; // unix seconds
         bool exists;
@@ -71,6 +72,7 @@ contract SatyaVote {
         uint256 indexed electionId,
         string title,
         string organization,
+        string electionType,
         uint256 startTime,
         uint256 endTime
     );
@@ -157,6 +159,7 @@ contract SatyaVote {
     function createElection(
         string calldata title,
         string calldata organization,
+        string calldata electionType,
         uint256 startTime,
         uint256 endTime
     ) external onlyAdmin returns (uint256 electionId) {
@@ -171,11 +174,12 @@ contract SatyaVote {
         e.id = electionId;
         e.title = title;
         e.organization = organization;
+        e.electionType = electionType;
         e.startTime = startTime;
         e.endTime = endTime;
         e.exists = true;
 
-        emit ElectionCreated(electionId, title, organization, startTime, endTime);
+        emit ElectionCreated(electionId, title, organization, electionType, startTime, endTime);
     }
 
     function addCandidate(

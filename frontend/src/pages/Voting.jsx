@@ -107,7 +107,7 @@ export default function Voting() {
                       <button
                         key={c.id}
                         onClick={() => setSelected(Number(c.id))}
-                        className={`flex w-full items-center gap-4 rounded-2xl border-2 bg-white p-4 text-left transition ${
+                        className={`flex w-full items-center gap-4 rounded-none border-2 bg-white p-4 text-left transition ${
                           isSel ? "border-leaf bg-leaf-50/40 shadow-card" : "border-transparent shadow-card ring-1 ring-black/5 hover:border-leaf/30"
                         }`}
                       >
@@ -137,7 +137,7 @@ export default function Voting() {
               <div className="card sticky top-24 p-6">
                 <h2 className="text-xs font-bold uppercase tracking-wider text-gray-500">Your Vote</h2>
 
-                <div className="mt-4 flex flex-col items-center rounded-2xl bg-leaf-50/60 p-5 text-center">
+                <div className="mt-4 flex flex-col items-center border border-leaf/20 bg-leaf-50/60 p-5 text-center">
                   {selectedCandidate ? (
                     <CandidateAvatar name={selectedCandidate.name} imageURI={selectedCandidate.imageURI} id={selectedCandidate.id} size="lg" />
                   ) : (
@@ -210,7 +210,7 @@ function AlreadyVoted({ onResults }) {
   return (
     <div className="mx-auto max-w-md py-12 text-center">
       <div className="relative mx-auto w-fit">
-        <div className="overflow-hidden rounded-3xl bg-white p-1.5 shadow-card ring-1 ring-black/5">
+        <div className="overflow-hidden rounded-none bg-white p-1.5 shadow-card ring-1 ring-black/5">
           <img
             src={ASSETS.mascot.matdataIdle}
             alt="Voted"

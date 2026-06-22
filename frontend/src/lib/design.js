@@ -67,7 +67,31 @@ export const ASSETS = {
   badge: {
     firstVote: `${A}/badge-achievement-first-vote.png`,
   },
+
+  electionType: {
+    country:  `${A}/country.png`,
+    state:    `${A}/state.png`,
+    panchayat:`${A}/gram-panchayat.png`,
+    school:   `${A}/school.png`,
+  },
 };
+
+/**
+ * Resolve the election-type artwork for an election.
+ * Prefers the on-chain `electionType`, falls back to keyword matching.
+ */
+export function electionImage(e) {
+  const t = e?.electionType;
+  if (t === "panchayat") return ASSETS.electionType.panchayat;
+  if (t === "school") return ASSETS.electionType.school;
+  if (t === "state") return ASSETS.electionType.state;
+  if (t === "country") return ASSETS.electionType.country;
+  const text = `${e?.title || ""} ${e?.organization || ""}`.toLowerCase();
+  if (/panchayat|gram|village|local body/.test(text)) return ASSETS.electionType.panchayat;
+  if (/school|student|college|university|council/.test(text)) return ASSETS.electionType.school;
+  if (/state|pradesh|assembly|vidhan|legislative/.test(text)) return ASSETS.electionType.state;
+  return ASSETS.electionType.country;
+}
 
 // Hardcoded mascot dialogue per page/context.
 export const DIALOGUE = {

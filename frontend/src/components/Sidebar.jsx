@@ -22,7 +22,7 @@ function Item({ to, label, icon: I }) {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition ${
+        `ripple flex items-center gap-3 rounded-none px-3.5 py-2.5 text-sm font-medium transition ${
           isActive ? "bg-leaf text-white shadow-sm" : "text-white/65 hover:bg-white/5 hover:text-white"
         }`
       }
@@ -39,7 +39,7 @@ export default function Sidebar({ onNavigate }) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex h-full flex-col bg-ink-900 px-4 py-6" onClick={onNavigate}>
+    <div className="flex h-full flex-col border-r border-white/[0.06] bg-[#000F26] px-4 py-6" onClick={onNavigate}>
       <Link to="/dashboard" className="block px-1">
         <img src={ASSETS.logoBanner} alt="Satya Vote" className="h-12 w-auto" />
       </Link>
@@ -52,7 +52,7 @@ export default function Sidebar({ onNavigate }) {
           <NavLink
             to="/admin"
             className={({ isActive }) =>
-              `flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold transition ${
+              `ripple flex items-center gap-3 rounded-none px-3.5 py-2.5 text-sm font-semibold transition ${
                 isActive ? "bg-saffron text-ink-900" : "text-saffron/85 hover:bg-white/5"
               }`
             }
@@ -77,7 +77,7 @@ export default function Sidebar({ onNavigate }) {
             disconnect();
             navigate("/");
           }}
-          className="flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium text-white/65 transition hover:bg-red-500/15 hover:text-red-300"
+          className="ripple flex w-full items-center gap-3 rounded-none px-3.5 py-2.5 text-sm font-medium text-white/65 transition hover:bg-red-500/15 hover:text-red-300"
         >
           <Icon.Logout />
           Logout

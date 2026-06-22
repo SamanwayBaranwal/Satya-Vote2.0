@@ -4,6 +4,7 @@ import {
   useChainId,
   usePublicClient,
   useReadContract,
+  useReadContracts,
   useWriteContract,
   useWaitForTransactionReceipt,
 } from "wagmi";
@@ -79,6 +80,40 @@ export function useCandidates(electionId) {
     query: { enabled, refetchInterval: REFETCH_MS },
   });
   return { candidates: data ? [...data] : [], isLoading, refetch };
+}
+
+/**
+ * Batch-fetch candidates for multiple elections.
+ * Returns a nested map: { [electionId]: { [candidateId]: name } }
+ */
+export function useCandidatesMulti(electionIds) {
+  const chainId = useChainId();
+  const base = contractConfig(chainId);
+  const enabled = electionIds.length > 0 && Boolean(getContractAddress(chainId));
+
+  const contracts = electionIds.map((id) => ({
+    ...base,
+    functionName: "getCandidates",
+    args: [BigInt(id)],
+  }));
+
+  const { data } = useReadContracts({
+    contracts,
+    query: { enabled },
+  });
+
+  const nameMap = {};
+  if (data) {
+    electionIds.forEach((eid, i) => {
+      const candidates = data[i]?.result;
+      if (!candidates) return;
+      nameMap[eid] = {};
+      candidates.forEach((c) => {
+        nameMap[eid][Number(c.id)] = c.name;
+      });
+    });
+  }
+  return nameMap;
 }
 
 export function useHasVoted(electionId) {

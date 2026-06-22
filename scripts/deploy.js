@@ -28,7 +28,7 @@ async function main() {
     console.log(`✅ Approved ${voters.length} demo voters (accounts #1–#5).`);
 
     // Election 1 — live for 24h.
-    await (await satyaVote.createElection("Student Council Election", "ABC University", now, now + 60 * 60 * 24)).wait();
+    await (await satyaVote.createElection("Student Council Election", "ABC University", "school", now, now + 60 * 60 * 24)).wait();
     await (await satyaVote.addCandidate(1, "Rahul Sharma", "Independent", "Focus on transparency, education and student empowerment.", "")).wait();
     await (await satyaVote.addCandidate(1, "Priya Singh", "Progressive Party", "Working for a better campus, more opportunities and equal rights.", "")).wait();
     await (await satyaVote.addCandidate(1, "Amit Kumar", "Student Alliance", "Building a united and stronger student community.", "")).wait();
@@ -41,7 +41,7 @@ async function main() {
     console.log("✅ Election 1 'Student Council Election' — 3 candidates, 4 votes cast.");
 
     // Election 2 — a second live election (Panchayat).
-    await (await satyaVote.createElection("Panchayat Election", "Greenfield Village", now, now + 60 * 60 * 12)).wait();
+    await (await satyaVote.createElection("Panchayat Election", "Greenfield Village", "panchayat", now, now + 60 * 60 * 12)).wait();
     await (await satyaVote.addCandidate(2, "Sunita Devi", "Gram Vikas", "Clean water and roads for every household.", "")).wait();
     await (await satyaVote.addCandidate(2, "Ramesh Yadav", "Kisan Morcha", "Fair prices and support for our farmers.", "")).wait();
     console.log("✅ Election 2 'Panchayat Election' — 2 candidates.");

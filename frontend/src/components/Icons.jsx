@@ -130,6 +130,16 @@ export const Icon = {
       <path d="M5 15V5a2 2 0 0 1 2-2h8" />
     </svg>
   ),
+  Menu: (p) => (
+    <svg {...base} {...p}>
+      <path d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  ),
+  X: (p) => (
+    <svg {...base} {...p}>
+      <path d="M18 6L6 18M6 6l12 12" />
+    </svg>
+  ),
 };
 
 // Premium tinted tile wrapping a line icon — replaces the old pixel PNGs.
@@ -140,13 +150,14 @@ const TONES = {
   violet: "bg-violet-50 text-violet-600",
   rose: "bg-rose-50 text-rose-500",
   ink: "bg-ink-800/[0.06] text-ink-700",
+  slate: "bg-slate-100 text-slate-500",
 };
 
 export function IconTile({ icon: I, tone = "leaf", size = "md", className = "" }) {
   const dims = size === "lg" ? "h-14 w-14" : size === "sm" ? "h-9 w-9" : "h-11 w-11";
   const isz = size === "lg" ? 26 : size === "sm" ? 18 : 22;
   return (
-    <div className={`flex shrink-0 items-center justify-center rounded-xl ${dims} ${TONES[tone] || TONES.leaf} ${className}`}>
+    <div className={`flex shrink-0 items-center justify-center rounded-none ${dims} ${TONES[tone] || TONES.leaf} ${className}`}>
       <I width={isz} height={isz} />
     </div>
   );

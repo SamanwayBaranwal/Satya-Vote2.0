@@ -1,6 +1,6 @@
 export default function EmptyState({ image, title, message, action }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 bg-white/60 px-6 py-12 text-center">
+    <div className="flex flex-col items-center justify-center rounded-none border-2 border-dashed border-gray-200 bg-white/60 px-6 py-12 text-center">
       {image && (
         <img
           src={image}

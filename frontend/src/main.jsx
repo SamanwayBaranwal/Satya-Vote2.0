@@ -10,6 +10,9 @@ import "./index.css";
 
 import App from "./App.jsx";
 import { config } from "./lib/wagmi.js";
+import { setupRipple } from "./lib/ripple.js";
+
+setupRipple();
 
 const queryClient = new QueryClient();
 
@@ -21,7 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           theme={lightTheme({
             accentColor: "#16a34a",
             accentColorForeground: "white",
-            borderRadius: "large",
+            borderRadius: "none",
             fontStack: "system",
           })}
         >
@@ -32,7 +35,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             position="top-right"
             toastOptions={{
               style: {
-                borderRadius: "12px",
+                borderRadius: "0px",
                 background: "#0c1a2b",
                 color: "#fff",
                 fontSize: "14px",

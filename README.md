@@ -9,6 +9,24 @@ A transparent, tamper-proof, decentralized voting platform on Ethereum.
 
 ---
 
+## ⚠️ Admin / Deployer wallet — THROWAWAY (Sepolia testnet ONLY)
+
+> This is a **brand-new disposable wallet** generated only for this testnet demo.
+> It holds nothing but **free Sepolia test ETH** (worthless).
+> **NEVER send it real funds. NEVER use this key on mainnet.**
+> Whoever holds this key is the contract **admin** (approve voters, create elections, add candidates).
+
+| Field | Value |
+|---|---|
+| **Admin address** | `0x66168E3ffd9A7d1e6B97dEa002c2e56D1E41271f` |
+| **Private key & seed phrase** | **Kept out of this PUBLIC repo.** Stored in the gitignored root `.env` on the deployer's machine. |
+
+> 🔒 This repo is public, so the private key is **not** committed here (it would leak permanently).
+> The real key lives only in the local `.env` (gitignored). Import that key into MetaMask to act
+> as admin. If this repo were private, the key could be stored here — but never for a public repo.
+
+---
+
 ## Project layout
 
 ```
@@ -65,15 +83,44 @@ cp .env.example .env     # add your WalletConnect projectId
 npm run dev              # http://localhost:5173
 ```
 
-### 3. Deploy to Sepolia
+### 3. Deploy to Sepolia (go live)
 
+The throwaway admin wallet is already set in the gitignored root `.env`. You only need to
+add a free RPC URL, fund the wallet, then deploy.
+
+**a. Fund the admin wallet with Sepolia test ETH** (free):
+Open a faucet and paste the admin address `0x66168E3ffd9A7d1e6B97dEa002c2e56D1E41271f`:
+- https://www.alchemy.com/faucets/ethereum-sepolia
+- https://sepolia-faucet.pk910.de (mining faucet, no account)
+- https://cloud.google.com/application/web3/faucet/ethereum/sepolia
+
+**b. Get a free Sepolia RPC URL** (Alchemy or Infura) and put it in root `.env` as
+`SEPOLIA_RPC_URL`. (Optional: an Etherscan API key for contract verification.)
+
+**c. Deploy:**
 ```bash
-cp .env.example .env     # fill SEPOLIA_RPC_URL, PRIVATE_KEY, ETHERSCAN_API_KEY
 npm run deploy:sepolia   # writes the sepolia address into frontend/src/contracts/addresses.json
+# optional, needs ETHERSCAN_API_KEY:
 npm run verify:sepolia <DEPLOYED_ADDRESS>
 ```
+The deployer wallet automatically becomes admin. After deploy, **commit & push** the updated
+`frontend/src/contracts/addresses.json` + `SatyaVote.abi.json` so Vercel rebuilds with the live address.
 
-The deployer wallet automatically becomes admin and sees the **Admin** tab in the app.
+### 4. Deploy the frontend to Vercel
+
+1. Push this repo to GitHub.
+2. On vercel.com → **New Project** → import the repo.
+3. Set **Root Directory** = `frontend` (Vercel auto-detects Vite; `frontend/vercel.json`
+   handles client-side routing).
+4. Add **Environment Variables**:
+   - `VITE_WALLETCONNECT_PROJECT_ID` — free from https://cloud.walletconnect.com
+   - `VITE_CONTRACT_ADDRESS` — *(optional)* the Sepolia address from step 3c; otherwise it's
+     read from the committed `addresses.json`.
+5. **Deploy.** Open the live URL, connect with the admin key (imported into MetaMask, on the
+   Sepolia network), open the **Admin** panel, and create your first election.
+
+> Note: the Sepolia deploy does **not** seed demo elections (that's local-only). Create
+> elections/candidates from the Admin panel once you're live.
 
 ---
 

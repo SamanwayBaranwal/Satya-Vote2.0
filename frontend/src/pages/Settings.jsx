@@ -54,7 +54,7 @@ export default function Settings() {
             <Row label="Network" value={chainId === 31337 ? "Hardhat (31337)" : `Chain ${chainId}`} />
             <Row label="Contract" value={getContractAddress(chainId) ? `${getContractAddress(chainId).slice(0, 8)}…` : "Not set"} mono />
           </dl>
-          <div className="mt-5 flex items-start gap-2 rounded-xl bg-leaf-50 p-3 text-xs text-leaf-700">
+          <div className="mt-5 flex items-start gap-2 border border-leaf/20 bg-leaf-50 p-3 text-xs text-leaf-700">
             <Icon.Lock width={16} height={16} />
             Satya Vote never holds your funds or keys. All actions are signed in your own wallet.
           </div>

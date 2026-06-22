@@ -6,16 +6,19 @@ import { PageLoader } from "../components/Loader.jsx";
 import Icon from "../components/Icons.jsx";
 import { ASSETS, DIALOGUE } from "../lib/design.js";
 import { txUrl } from "../lib/contract.js";
-import { useMyVotes, useElections } from "../hooks/useSatyaVote.js";
+import { useMyVotes, useElections, useCandidatesMulti } from "../hooks/useSatyaVote.js";
 
 export default function History() {
   const { isConnected } = useAccount();
   const chainId = useChainId();
   const { votes, loading } = useMyVotes();
   const { elections } = useElections();
+  const electionIds = [...new Set(votes.map((v) => v.electionId))];
+  const nameMap = useCandidatesMulti(electionIds);
 
   const titleOf = (id) => elections.find((e) => Number(e.id) === id)?.title || `Election #${id}`;
-  const candidateNote = (v) => `Candidate #${v.candidateId}`;
+  const candidateName = (v) =>
+    nameMap[v.electionId]?.[v.candidateId] || `Candidate #${v.candidateId}`;
 
   return (
     <AppLayout title="Vote History" subtitle="Every vote you've cast, on-chain" dialogue={DIALOGUE.dashboard}>
@@ -49,7 +52,7 @@ export default function History() {
                       <div className="font-semibold text-ink-800">{titleOf(v.electionId)}</div>
                       <div className="label-mono">Block #{v.block}</div>
                     </td>
-                    <td className="px-5 py-4 text-gray-600">{candidateNote(v)}</td>
+                    <td className="px-5 py-4 text-gray-600">{candidateName(v)}</td>
                     <td className="px-5 py-4">
                       {url ? (
                         <a href={url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-mono text-xs text-leaf hover:underline">

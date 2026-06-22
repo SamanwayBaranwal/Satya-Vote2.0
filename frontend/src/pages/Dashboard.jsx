@@ -8,7 +8,7 @@ import ConnectPrompt from "../components/ConnectPrompt.jsx";
 import Icon, { IconTile } from "../components/Icons.jsx";
 import { Link } from "react-router-dom";
 import { useChainId } from "wagmi";
-import { ASSETS, DIALOGUE } from "../lib/design.js";
+import { ASSETS, DIALOGUE, electionImage } from "../lib/design.js";
 import { statusOf, STATUS, txUrl } from "../lib/contract.js";
 import { useElections, useIsApprovedVoter, useIsAdmin, useMyVotes } from "../hooks/useSatyaVote.js";
 
@@ -20,15 +20,18 @@ export default function Dashboard() {
   const { isApproved } = useIsApprovedVoter();
   const { isAdmin } = useIsAdmin();
   const { elections } = useElections();
+  const { votes } = useMyVotes();
 
   const active = elections.filter((e) => statusOf(e) !== STATUS.ENDED);
+  const live = elections.filter((e) => statusOf(e) === STATUS.LIVE);
 
   return (
     <AppLayout title="Dashboard" subtitle="Ek Vote, Ek Sach" dialogue={DIALOGUE.dashboard}>
-      {/* Welcome banner */}
-      <section className="overflow-hidden rounded-2xl bg-gradient-to-r from-leaf-50 via-leaf-50/60 to-white p-6 shadow-card ring-1 ring-leaf/10">
+      {/* Welcome banner — sharp, bracketed */}
+      <section className="card overflow-hidden bg-gradient-to-r from-leaf-50 via-leaf-50/50 to-white p-6">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div>
+            <p className="label-mono mb-1 text-leaf">▸ WELCOME BACK</p>
             <h2 className="font-display text-2xl font-extrabold text-ink-800">
               Namaste, <span className="font-mono text-xl">{isConnected ? short(address) : "Matdata"}</span> 👋
             </h2>
@@ -63,10 +66,24 @@ export default function Dashboard() {
         </div>
       </section>
 
+      {/* VOID-style stat tiles */}
+      <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <StatTile label="Total Elections" value={elections.length} hint="all time" icon={Icon.Ballot} tone="leaf" />
+        <StatTile label="Live Now" value={live.length} hint={live.length ? "vote open" : "none active"} icon={Icon.Results} tone="saffron" />
+        <StatTile label="My Votes" value={votes.length} hint="on-chain" icon={Icon.History} tone="sky" />
+        <StatTile
+          label="Voter Status"
+          value={isApproved ? "✓" : "—"}
+          hint={isApproved ? "approved" : isConnected ? "pending" : "connect"}
+          icon={Icon.Profile}
+          tone={isApproved ? "leaf" : "slate"}
+        />
+      </div>
+
       <div className="mt-6 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         {/* Active elections */}
         <section>
-          <SectionTitle>Active Elections</SectionTitle>
+          <h3 className="section-head">Active Elections</h3>
           {active.length === 0 ? (
             <EmptyState
               image={ASSETS.empty.noElections}
@@ -92,29 +109,42 @@ export default function Dashboard() {
   );
 }
 
-function SectionTitle({ children }) {
-  return <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-500">{children}</h3>;
+function StatTile({ label, value, hint, icon, tone }) {
+  return (
+    <div className="card flex flex-col gap-2 p-5">
+      <div className="flex items-center justify-between">
+        <span className="label-mono">{label}</span>
+        <IconTile icon={icon} tone={tone} size="sm" />
+      </div>
+      <div className="font-display text-3xl font-extrabold leading-none text-ink-800">{value}</div>
+      <div className="font-mono text-[11px] text-gray-400">{hint}</div>
+    </div>
+  );
 }
 
 function ActiveElectionCard({ e, onVote }) {
   const status = statusOf(e);
   return (
-    <div className="flex items-center gap-4 rounded-2xl bg-white p-5 shadow-card ring-1 ring-black/5">
-      <IconTile icon={Icon.Ballot} tone="leaf" size="lg" className="hidden sm:flex" />
-      <div className="flex-1">
-        <StatusBadge status={status} />
-        <h4 className="mt-2 font-display text-lg font-bold text-ink-800">{e.title}</h4>
-        <p className="text-xs text-gray-500">{e.organization}</p>
-        <p className="mt-3 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
-          {status === STATUS.UPCOMING ? "Starts in" : "Ends in"}
-        </p>
-        <div className="mt-1">
-          <CountdownTimer target={status === STATUS.UPCOMING ? e.startTime : e.endTime} variant="dark" />
-        </div>
+    <div className="card flex items-stretch overflow-hidden p-0">
+      <div className="hidden w-48 shrink-0 self-stretch p-3 sm:block">
+        <img src={electionImage(e)} alt="" className="h-full w-full object-contain object-bottom" />
       </div>
-      <button onClick={onVote} disabled={status !== STATUS.LIVE} className="btn-primary self-end whitespace-nowrap">
-        Vote Now →
-      </button>
+      <div className="flex flex-1 items-center gap-4 p-5">
+        <div className="flex-1">
+          <StatusBadge status={status} />
+          <h4 className="mt-2 font-display text-lg font-bold text-ink-800">{e.title}</h4>
+          <p className="text-xs text-gray-500">{e.organization}</p>
+          <p className="mt-3 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+            {status === STATUS.UPCOMING ? "Starts in" : "Ends in"}
+          </p>
+          <div className="mt-1">
+            <CountdownTimer target={status === STATUS.UPCOMING ? e.startTime : e.endTime} variant="dark" />
+          </div>
+        </div>
+        <button onClick={onVote} disabled={status !== STATUS.LIVE} className="btn-primary self-end whitespace-nowrap">
+          Vote Now →
+        </button>
+      </div>
     </div>
   );
 }
@@ -128,7 +158,7 @@ function ProfileCard({ address, isApproved }) {
   ];
   return (
     <div className="card p-5">
-      <SectionTitle>My Profile</SectionTitle>
+      <h3 className="section-head">My Profile</h3>
       <dl className="space-y-3">
         {rows.map((r) => (
           <div key={r.label} className="flex items-center justify-between">
@@ -150,14 +180,14 @@ function VoteHistoryCard() {
   return (
     <div className="card p-5">
       <div className="flex items-center justify-between">
-        <SectionTitle>My Vote History</SectionTitle>
+        <h3 className="section-head">My Vote History</h3>
         <Link to="/history" className="label-mono text-leaf hover:underline">View all</Link>
       </div>
 
       {loading ? (
         <div className="space-y-2">
-          <div className="skeleton h-8 w-full rounded-lg" />
-          <div className="skeleton h-8 w-full rounded-lg" />
+          <div className="skeleton h-8 w-full" />
+          <div className="skeleton h-8 w-full" />
         </div>
       ) : votes.length === 0 ? (
         <div className="flex flex-col items-center py-6 text-center">
@@ -198,7 +228,7 @@ function VoteHistoryCard() {
         </table>
       )}
 
-      <div className="mt-4 flex items-start gap-2 rounded-xl bg-leaf-50 p-3 text-xs text-leaf-700">
+      <div className="mt-4 flex items-start gap-2 border border-leaf/20 bg-leaf-50 p-3 text-xs text-leaf-700">
         <Icon.Shield width={16} height={16} />
         <div>Your votes are secured and verifiable on the blockchain.</div>
       </div>

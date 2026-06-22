@@ -86,7 +86,7 @@ export default function Landing() {
           {/* Hero visual */}
           <div className="relative">
             <div className="absolute inset-0 -z-10 bg-gradient-to-br from-leaf-50 via-white to-saffron/10 blur-2xl" />
-            <div className="relative overflow-hidden rounded-3xl shadow-lift ring-1 ring-black/5">
+            <div className="relative overflow-hidden rounded-none shadow-lift ring-1 ring-black/5">
               <img
                 src={ASSETS.heroMain}
                 alt="Adhyaksh presiding over the election at Parliament"
@@ -155,7 +155,7 @@ export default function Landing() {
           </div>
 
           {live.length === 0 ? (
-            <div className="mt-6 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50/60 px-6 py-10 text-center">
+            <div className="mt-6 rounded-none border-2 border-dashed border-gray-200 bg-gray-50/60 px-6 py-10 text-center">
               <img src={ASSETS.empty.noElections} alt="" className="mx-auto h-24 w-24 opacity-90" style={{ imageRendering: "pixelated" }} />
               <p className="mt-3 font-display font-bold text-ink-800">No live elections right now</p>
               <p className="text-sm text-gray-500">Connect your wallet — new elections will appear here the moment they go live.</p>
@@ -166,7 +166,7 @@ export default function Landing() {
                 <button
                   key={e.id}
                   onClick={() => navigate(`/vote/${e.id}`)}
-                  className="rounded-2xl border border-gray-100 bg-gradient-to-b from-white to-gray-50 p-5 text-left shadow-card transition hover:-translate-y-0.5 hover:shadow-lift"
+                  className="card bg-gradient-to-b from-white to-gray-50 p-5 text-left transition hover:-translate-y-0.5 hover:shadow-lift"
                 >
                   <StatusBadge status={statusOf(e)} />
                   <h3 className="mt-3 font-display text-base font-bold text-ink-800">{e.title}</h3>

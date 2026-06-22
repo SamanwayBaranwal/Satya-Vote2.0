@@ -11,7 +11,7 @@ export default function FocusTopbar({ backTo = "/elections", center, action }) {
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(backTo)}
-            className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-ink-700 transition hover:bg-white/60"
+            className="ripple flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-ink-700 transition hover:bg-white/60"
           >
             ← Back
           </button>

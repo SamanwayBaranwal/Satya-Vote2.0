@@ -3,8 +3,8 @@ import AppLayout from "../components/AppLayout.jsx";
 import CountdownTimer from "../components/CountdownTimer.jsx";
 import StatusBadge from "../components/StatusBadge.jsx";
 import EmptyState from "../components/EmptyState.jsx";
-import Icon, { IconTile } from "../components/Icons.jsx";
-import { ASSETS, DIALOGUE } from "../lib/design.js";
+import Icon from "../components/Icons.jsx";
+import { ASSETS, DIALOGUE, electionImage } from "../lib/design.js";
 import { statusOf, STATUS } from "../lib/contract.js";
 import { useElections } from "../hooks/useSatyaVote.js";
 
@@ -31,32 +31,49 @@ export default function Elections({ mode = "vote" }) {
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {elections.map((e) => {
             const status = statusOf(e);
+            const img = electionImage(e);
             return (
               <button
                 key={e.id}
                 onClick={() => go(e)}
-                className="card p-5 text-left transition hover:-translate-y-1 hover:shadow-lift"
+                className="card overflow-hidden p-0 text-left transition hover:-translate-y-1 hover:shadow-lift"
               >
-                <div className="flex items-center justify-between">
-                  <StatusBadge status={status} />
-                  <span className="text-xs text-gray-400">{Number(e.totalVotes)} votes</span>
+                {/* Election type image banner */}
+                <div className="relative h-44 w-full overflow-hidden bg-gradient-to-b from-ink-900/[0.04] to-ink-900/[0.08]">
+                  <img
+                    src={img}
+                    alt={e.title}
+                    className="h-full w-full object-contain p-1.5 transition duration-300 hover:scale-105"
+                  />
+                  <div className="absolute right-3 top-3">
+                    <StatusBadge status={status} />
+                  </div>
                 </div>
-                <IconTile icon={isResults ? Icon.Results : Icon.Ballot} tone={isResults ? "violet" : "leaf"} className="mt-3" />
-                <h3 className="mt-2 font-display text-base font-bold text-ink-800">{e.title}</h3>
-                <p className="text-xs text-gray-500">{e.organization}</p>
-                {status !== STATUS.ENDED && (
-                  <>
-                    <p className="mt-3 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
-                      {status === STATUS.UPCOMING ? "Starts in" : "Ends in"}
-                    </p>
-                    <div className="mt-1">
-                      <CountdownTimer target={status === STATUS.UPCOMING ? e.startTime : e.endTime} variant="dark" />
-                    </div>
-                  </>
-                )}
-                <p className="mt-4 text-sm font-semibold text-leaf">
-                  {isResults ? "View Results →" : status === STATUS.LIVE ? "Vote Now →" : "View →"}
-                </p>
+
+                {/* Card body */}
+                <div className="p-5">
+                  <div className="flex items-center justify-between">
+                    <span className="label-mono">{Number(e.totalVotes)} votes</span>
+                  </div>
+                  <h3 className="mt-2 font-display text-base font-bold text-ink-800">{e.title}</h3>
+                  <p className="text-xs text-gray-500">{e.organization}</p>
+
+                  {status !== STATUS.ENDED && (
+                    <>
+                      <p className="mt-3 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+                        {status === STATUS.UPCOMING ? "Starts in" : "Ends in"}
+                      </p>
+                      <div className="mt-1">
+                        <CountdownTimer target={status === STATUS.UPCOMING ? e.startTime : e.endTime} variant="dark" />
+                      </div>
+                    </>
+                  )}
+
+                  <p className="mt-4 flex items-center gap-1 text-sm font-semibold text-leaf">
+                    {isResults ? "View Results" : status === STATUS.LIVE ? "Vote Now" : "View"}
+                    <Icon.External width={13} height={13} />
+                  </p>
+                </div>
               </button>
             );
           })}

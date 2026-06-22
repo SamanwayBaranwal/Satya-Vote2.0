@@ -77,6 +77,12 @@
       },
       {
         "indexed": false,
+        "internalType": "string",
+        "name": "electionType",
+        "type": "string"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "startTime",
         "type": "uint256"
@@ -314,6 +320,11 @@
         "type": "string"
       },
       {
+        "internalType": "string",
+        "name": "electionType",
+        "type": "string"
+      },
+      {
         "internalType": "uint256",
         "name": "startTime",
         "type": "uint256"
@@ -520,6 +531,11 @@
             "type": "string"
           },
           {
+            "internalType": "string",
+            "name": "electionType",
+            "type": "string"
+          },
+          {
             "internalType": "uint256",
             "name": "startTime",
             "type": "uint256"
@@ -577,6 +593,11 @@
           {
             "internalType": "string",
             "name": "organization",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "electionType",
             "type": "string"
           },
           {

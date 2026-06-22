@@ -49,7 +49,7 @@ export default function About() {
 
         <div className="relative flex justify-center">
           <div className="absolute inset-0 -z-10 bg-gradient-to-br from-leaf-50 to-saffron/10 blur-2xl" />
-          <div className="rounded-3xl bg-gradient-to-b from-sky-50 to-leaf-50 p-8 shadow-card ring-1 ring-black/5">
+          <div className="rounded-none bg-gradient-to-b from-sky-50 to-leaf-50 p-8 shadow-card ring-1 ring-black/5">
             <img src={ASSETS.illustration.tamperProof} alt="" className="h-56 w-56 animate-float" style={{ imageRendering: "pixelated" }} />
           </div>
         </div>
@@ -58,7 +58,7 @@ export default function About() {
       <section className="container-app grid gap-5 pb-10 md:grid-cols-3">
         {PILLARS.map((p) => (
           <div key={p.title} className="card p-7">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-leaf-50 text-leaf">
+            <div className="flex h-12 w-12 items-center justify-center rounded-none bg-leaf-50 text-leaf">
               <p.icon width={24} height={24} />
             </div>
             <h3 className="mt-4 font-display text-lg font-bold text-ink-800">{p.title}</h3>
@@ -68,7 +68,7 @@ export default function About() {
       </section>
 
       <section className="container-app pb-16">
-        <div className="grid gap-4 rounded-2xl bg-ink-800 p-8 text-center sm:grid-cols-3">
+        <div className="card grid gap-4 bg-ink-800 p-8 text-center sm:grid-cols-3">
           {STATS.map((s) => (
             <div key={s.label}>
               <div className="font-display text-3xl font-extrabold text-white">{s.value}</div>

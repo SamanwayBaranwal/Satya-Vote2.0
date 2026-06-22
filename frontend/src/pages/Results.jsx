@@ -151,7 +151,7 @@ export default function Results() {
 
                 {/* Winner card */}
                 <aside className="space-y-6">
-                  <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-leaf-50 to-white p-6 text-center shadow-card ring-1 ring-leaf/15">
+                  <div className="card relative overflow-hidden bg-gradient-to-b from-leaf-50 to-white p-6 text-center">
                     <img
                       src={ASSETS.icon.statusWinner}
                       alt=""

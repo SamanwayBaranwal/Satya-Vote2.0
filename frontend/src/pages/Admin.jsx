@@ -118,7 +118,7 @@ function Card({ title, children }) {
 }
 
 const inputCls =
-  "w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-ink-800 outline-none focus:border-leaf focus:ring-2 focus:ring-leaf/20";
+  "w-full rounded-none border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-ink-800 outline-none focus:border-leaf focus:ring-2 focus:ring-leaf/20";
 
 function ApproveVoterCard({ tx, busy }) {
   const [addr, setAddr] = useState("");
@@ -160,8 +160,15 @@ const DURATIONS = [
   { label: "48 hours", min: 60 * 48 },
 ];
 
+const ELECTION_TYPES = [
+  { value: "country",   label: "🇮🇳 Country" },
+  { value: "state",     label: "🏛 State" },
+  { value: "panchayat", label: "🌾 Gram Panchayat" },
+  { value: "school",    label: "🎓 School / College" },
+];
+
 function CreateElectionCard({ tx, busy }) {
-  const [form, setForm] = useState({ title: "", org: "" });
+  const [form, setForm] = useState({ title: "", org: "", electionType: "country" });
   const [durationMin, setDurationMin] = useState(60 * 24); // default 24h
   const [custom, setCustom] = useState("");
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
@@ -172,12 +179,12 @@ function CreateElectionCard({ tx, busy }) {
     if (!mins || mins <= 0) return toast.error("Pick a valid duration.");
     const start = Math.floor(Date.now() / 1000);
     const end = start + Math.round(mins * 60);
-    const ok = await tx("createElection", [form.title, form.org, BigInt(start), BigInt(end)], {
+    const ok = await tx("createElection", [form.title, form.org, form.electionType, BigInt(start), BigInt(end)], {
       pending: "Creating election…",
       success: `Election created — live for ${custom ? custom + " min" : DURATIONS.find((d) => d.min === durationMin)?.label} ✓`,
     });
     if (ok) {
-      setForm({ title: "", org: "" });
+      setForm({ title: "", org: "", electionType: "country" });
       setCustom("");
     }
   }
@@ -186,6 +193,26 @@ function CreateElectionCard({ tx, busy }) {
     <Card title="Create Election">
       <input className={inputCls} placeholder="Election title (e.g. Student Council Election)" value={form.title} onChange={set("title")} />
       <input className={inputCls} placeholder="Organization (e.g. ABC University)" value={form.org} onChange={set("org")} />
+
+      <div>
+        <p className="label-mono mb-2">Election Type</p>
+        <div className="flex flex-wrap gap-2">
+          {ELECTION_TYPES.map((t) => (
+            <button
+              key={t.value}
+              type="button"
+              onClick={() => setForm({ ...form, electionType: t.value })}
+              className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                form.electionType === t.value
+                  ? "bg-ink-800 text-white shadow-sm"
+                  : "bg-gray-100 text-ink-700 hover:bg-gray-200"
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div>
         <p className="label-mono mb-2">Duration · starts immediately</p>

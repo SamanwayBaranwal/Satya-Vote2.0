@@ -42,7 +42,7 @@ export function SkeletonCard() {
       <div className="skeleton mt-4 h-10 w-10 rounded-lg" />
       <div className="skeleton mt-3 h-5 w-3/4 rounded" />
       <div className="skeleton mt-2 h-4 w-1/2 rounded" />
-      <div className="skeleton mt-5 h-10 w-full rounded-xl" />
+      <div className="skeleton mt-5 h-10 w-full" />
     </div>
   );
 }

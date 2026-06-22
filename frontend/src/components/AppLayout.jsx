@@ -23,15 +23,16 @@ export default function AppLayout({ title, subtitle, dialogue, children }) {
         <Sidebar />
       </aside>
 
-      {/* Mobile drawer */}
-      {open && (
-        <div className="fixed inset-0 z-40 lg:hidden">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setOpen(false)} />
-          <aside className="absolute inset-y-0 left-0 w-64">
-            <Sidebar onNavigate={() => setOpen(false)} />
-          </aside>
-        </div>
-      )}
+      {/* Mobile drawer — always in DOM for CSS transition */}
+      <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${open ? "visible" : "invisible"}`}>
+        <div
+          className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}
+          onClick={() => setOpen(false)}
+        />
+        <aside className={`absolute inset-y-0 left-0 w-64 transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"}`}>
+          <Sidebar onNavigate={() => setOpen(false)} />
+        </aside>
+      </div>
 
       <div className="relative lg:pl-64">
         {/* Glass top bar */}
@@ -39,11 +40,11 @@ export default function AppLayout({ title, subtitle, dialogue, children }) {
           <div className="flex h-16 items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-3">
               <button
-                onClick={() => setOpen(true)}
-                className="rounded-xl p-2 text-ink-700 hover:bg-white/60 lg:hidden"
+                onClick={() => setOpen(!open)}
+                className="ripple rounded-none p-2 text-ink-700 transition hover:bg-white/60 lg:hidden"
                 aria-label="menu"
               >
-                ☰
+                {open ? <Icon.X /> : <Icon.Menu />}
               </button>
               <div>
                 <h1 className="font-display text-lg font-extrabold leading-tight text-ink-800">{title}</h1>
