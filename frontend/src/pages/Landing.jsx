@@ -124,11 +124,32 @@ export default function Landing() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="how-it-works" className="container-app py-12">
-        <div className="card p-8">
+      <section id="how-it-works" className="container-app py-10 sm:py-12">
+        <div className="card p-5 sm:p-8">
           <h2 className="text-center font-display text-2xl font-extrabold text-ink-800">How It Works</h2>
           <div className="mx-auto mt-1 h-[3px] w-24 tricolor-rule" />
-          <div className="mt-8 flex flex-col items-center gap-4 md:flex-row md:justify-between">
+
+          {/* Mobile: modern vertical timeline */}
+          <ol className="relative mt-7 space-y-3 md:hidden">
+            <span
+              aria-hidden
+              className="absolute bottom-5 left-[19px] top-5 w-0.5 bg-gradient-to-b from-leaf via-saffron to-lotus/50"
+            />
+            {STEPS.map((s) => (
+              <li key={s.n} className="relative flex items-center gap-3.5">
+                <span className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink-800 font-display text-sm font-bold text-white ring-4 ring-white">
+                  {s.n}
+                </span>
+                <div className="flex flex-1 items-center gap-3 rounded-xl bg-gray-50 p-3 ring-1 ring-black/5">
+                  <IconTile icon={s.icon} tone={s.tone} size="sm" />
+                  <p className="text-sm font-semibold text-ink-800">{s.title}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          {/* Desktop: horizontal flow */}
+          <div className="mt-8 hidden items-center justify-between gap-4 md:flex">
             {STEPS.map((s, i) => (
               <div key={s.n} className="flex flex-1 items-center">
                 <div className="flex flex-1 flex-col items-center text-center">
@@ -137,7 +158,7 @@ export default function Landing() {
                     {s.n}. {s.title}
                   </p>
                 </div>
-                {i < STEPS.length - 1 && <span className="hidden text-2xl text-gray-300 md:block">→</span>}
+                {i < STEPS.length - 1 && <span className="text-2xl text-gray-300">→</span>}
               </div>
             ))}
           </div>
