@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAccount } from "wagmi";
 import Sidebar from "./Sidebar.jsx";
+import BottomNav from "./BottomNav.jsx";
 import Icon from "./Icons.jsx";
 import ConnectWalletButton from "./ConnectWalletButton.jsx";
 import MascotBubble from "./MascotBubble.jsx";
@@ -38,21 +39,14 @@ export default function AppLayout({ title, subtitle, dialogue, children }) {
         {/* Glass top bar */}
         <header className="glass-nav sticky top-0 z-20 border-b border-white/30">
           <div className="flex h-16 items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setOpen(!open)}
-                className="ripple rounded-none p-2 text-ink-700 transition hover:bg-white/60 lg:hidden"
-                aria-label="menu"
-              >
-                {open ? <Icon.X /> : <Icon.Menu />}
-              </button>
-              <div>
-                <h1 className="font-display text-lg font-extrabold leading-tight text-ink-800">{title}</h1>
-                {subtitle && <p className="text-xs text-gray-500">{subtitle}</p>}
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="min-w-0">
+                <h1 className="truncate font-display text-base font-extrabold leading-tight text-ink-800 sm:text-lg">{title}</h1>
+                {subtitle && <p className="truncate text-xs text-gray-500">{subtitle}</p>}
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex shrink-0 items-center gap-2">
               <button className="relative rounded-full p-2.5 text-ink-700 ring-1 ring-white/60 transition hover:bg-white/60">
                 <Icon.Bell />
                 <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-lotus" />
@@ -64,8 +58,11 @@ export default function AppLayout({ title, subtitle, dialogue, children }) {
           </div>
         </header>
 
-        <main className="px-4 py-6 sm:px-6 lg:px-8">{children}</main>
+        <main className="px-4 py-6 pb-28 sm:px-6 lg:px-8 lg:pb-6">{children}</main>
       </div>
+
+      {/* Mobile bottom tab bar — app-style nav from the sidebar */}
+      <BottomNav onMore={() => setOpen(true)} />
 
       {dialogue && <MascotBubble dialogue={dialogue} position="bottom-right" />}
     </div>

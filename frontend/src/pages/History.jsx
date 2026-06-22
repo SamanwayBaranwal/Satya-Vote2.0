@@ -34,7 +34,8 @@ export default function History() {
         />
       ) : (
         <div className="card overflow-hidden">
-          <table className="w-full text-left text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full min-w-[560px] text-left text-sm">
             <thead className="bg-gray-50/80 text-gray-400">
               <tr>
                 <th className="label-mono px-5 py-3">Election</th>
@@ -72,6 +73,7 @@ export default function History() {
               })}
             </tbody>
           </table>
+          </div>
           <div className="flex items-start gap-2 border-t border-gray-100 bg-leaf-50/50 p-4 text-xs text-leaf-700">
             <Icon.Shield width={16} height={16} />
             All votes are stored immutably on the blockchain and are publicly verifiable. Click any transaction to view it on the explorer.

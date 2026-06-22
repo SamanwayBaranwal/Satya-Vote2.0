@@ -19,7 +19,7 @@ export default function MascotBubble({ dialogue, position = "bottom-right" }) {
       : "right-4 sm:right-6 flex-row-reverse";
 
   return (
-    <div className={`pointer-events-none fixed bottom-8 z-40 hidden items-start gap-2 md:flex ${pos}`}>
+    <div className={`pointer-events-none fixed bottom-24 z-40 hidden items-start gap-2 md:flex lg:bottom-8 ${pos}`}>
       {open && (
         <div className="pointer-events-auto relative max-w-[260px] animate-bubble-in rounded-none bg-white px-4 py-3 shadow-lift ring-1 ring-black/5">
           <p className="label-mono !text-leaf">{dialogue.name}</p>

@@ -129,8 +129,8 @@ function ActiveElectionCard({ e, onVote }) {
       <div className="hidden w-48 shrink-0 self-stretch p-3 sm:block">
         <img src={electionImage(e)} alt="" className="h-full w-full object-contain object-bottom" />
       </div>
-      <div className="flex flex-1 items-center gap-4 p-5">
-        <div className="flex-1">
+      <div className="flex flex-1 flex-col items-start gap-4 p-5 sm:flex-row sm:items-center">
+        <div className="min-w-0 flex-1">
           <StatusBadge status={status} />
           <h4 className="mt-2 font-display text-lg font-bold text-ink-800">{e.title}</h4>
           <p className="text-xs text-gray-500">{e.organization}</p>
@@ -141,7 +141,7 @@ function ActiveElectionCard({ e, onVote }) {
             <CountdownTimer target={status === STATUS.UPCOMING ? e.startTime : e.endTime} variant="dark" />
           </div>
         </div>
-        <button onClick={onVote} disabled={status !== STATUS.LIVE} className="btn-primary self-end whitespace-nowrap">
+        <button onClick={onVote} disabled={status !== STATUS.LIVE} className="btn-primary w-full whitespace-nowrap sm:w-auto sm:self-end">
           Vote Now →
         </button>
       </div>
@@ -195,7 +195,8 @@ function VoteHistoryCard() {
           <p className="mt-2 text-sm text-gray-500">No votes yet. Cast your first vote!</p>
         </div>
       ) : (
-        <table className="w-full text-left text-sm">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[340px] text-left text-sm">
           <thead>
             <tr className="text-gray-400">
               <th className="label-mono pb-2">Election</th>
@@ -226,6 +227,7 @@ function VoteHistoryCard() {
             })}
           </tbody>
         </table>
+        </div>
       )}
 
       <div className="mt-4 flex items-start gap-2 border border-leaf/20 bg-leaf-50 p-3 text-xs text-leaf-700">
