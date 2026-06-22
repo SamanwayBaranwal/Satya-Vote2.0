@@ -29,9 +29,12 @@ export default function Profile() {
           {/* Identity card */}
           <div className="card overflow-hidden">
             <div className="bg-gradient-to-br from-ink-800 to-ink-700 p-6 text-center text-white">
-              <div className="mx-auto flex h-28 w-28 items-center justify-center overflow-hidden rounded-none bg-white shadow-lg ring-1 ring-white/20">
-                <img src={ASSETS.mascot.matdataHappy} alt="" className="h-full w-full object-contain" style={{ imageRendering: "pixelated" }} />
-              </div>
+              <img
+                src={ASSETS.mascot.matdataFinger}
+                alt="Matdata"
+                className="mx-auto h-28 w-28 object-contain drop-shadow-xl"
+                style={{ imageRendering: "pixelated" }}
+              />
               <h3 className="mt-2 font-display text-lg font-bold">Matdata Ji</h3>
               <p className="text-xs text-white/60">Verified Citizen Voter</p>
               <div className="mt-3 inline-flex">
