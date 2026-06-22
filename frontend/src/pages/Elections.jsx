@@ -43,7 +43,7 @@ export default function Elections({ mode = "vote" }) {
                   <img
                     src={img}
                     alt={e.title}
-                    className="h-full w-full object-contain p-1.5 transition duration-300 hover:scale-105"
+                    className="h-full w-full object-cover transition duration-300 hover:scale-105"
                   />
                   <div className="absolute right-3 top-3">
                     <StatusBadge status={status} />

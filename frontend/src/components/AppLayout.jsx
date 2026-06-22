@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAccount } from "wagmi";
 import Sidebar from "./Sidebar.jsx";
 import BottomNav from "./BottomNav.jsx";
+import MoreSheet from "./MoreSheet.jsx";
 import Icon from "./Icons.jsx";
 import ConnectWalletButton from "./ConnectWalletButton.jsx";
 import MascotBubble from "./MascotBubble.jsx";
@@ -24,16 +25,8 @@ export default function AppLayout({ title, subtitle, dialogue, children }) {
         <Sidebar />
       </aside>
 
-      {/* Mobile drawer — always in DOM for CSS transition */}
-      <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${open ? "visible" : "invisible"}`}>
-        <div
-          className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}
-          onClick={() => setOpen(false)}
-        />
-        <aside className={`absolute inset-y-0 left-0 w-64 transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"}`}>
-          <Sidebar onNavigate={() => setOpen(false)} />
-        </aside>
-      </div>
+      {/* Mobile menu — modern bottom sheet (replaces the old left drawer) */}
+      <MoreSheet open={open} onClose={() => setOpen(false)} />
 
       <div className="relative lg:pl-64">
         {/* Glass top bar */}
