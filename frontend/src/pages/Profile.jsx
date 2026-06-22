@@ -30,7 +30,7 @@ export default function Profile() {
           <div className="card overflow-hidden">
             <div className="bg-gradient-to-br from-ink-800 to-ink-700 p-6 text-center text-white">
               <img
-                src={ASSETS.mascot.matdataFinger}
+                src={ASSETS.mascot.matdataHappy}
                 alt="Matdata"
                 className="mx-auto h-28 w-28 object-contain drop-shadow-xl"
                 style={{ imageRendering: "pixelated" }}

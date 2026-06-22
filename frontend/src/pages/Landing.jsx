@@ -99,25 +99,27 @@ export default function Landing() {
 
       {/* STATS + FEATURES */}
       <section id="features" className="container-app pb-6">
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
           {STATS.map((s) => (
-            <div key={s.label} className="stat-card flex-row items-center gap-4">
+            <div key={s.label} className="card-soft flex items-center gap-4 p-4 sm:p-5">
               <IconTile icon={s.icon} tone={s.tone} size="lg" />
-              <div>
-                <div className="font-display text-2xl font-extrabold text-ink-800">{s.value}</div>
-                <div className="text-sm font-semibold text-ink-800">{s.label}</div>
+              <div className="min-w-0">
+                <div className="font-display text-2xl font-extrabold leading-none text-ink-800">{s.value}</div>
+                <div className="mt-1 text-sm font-semibold text-ink-800">{s.label}</div>
                 <div className="text-xs text-gray-500">{s.sub}</div>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+        <div className="mt-3 grid gap-3 sm:mt-4 sm:grid-cols-3 sm:gap-4">
           {FEATURES.map((f) => (
-            <div key={f.title} className="card p-6">
+            <div key={f.title} className="card-soft flex items-start gap-4 p-5 hover:-translate-y-0.5 hover:shadow-lift sm:block">
               <IconTile icon={f.icon} tone={f.tone} size="lg" />
-              <h3 className="mt-3 text-base font-bold text-ink-800">{f.title}</h3>
-              <p className="mt-1 text-sm leading-relaxed text-gray-500">{f.desc}</p>
+              <div className="min-w-0 sm:mt-3">
+                <h3 className="text-base font-bold text-ink-800">{f.title}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-gray-500">{f.desc}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -125,7 +127,7 @@ export default function Landing() {
 
       {/* HOW IT WORKS */}
       <section id="how-it-works" className="container-app py-10 sm:py-12">
-        <div className="card p-5 sm:p-8">
+        <div className="card-soft p-5 sm:p-8">
           <h2 className="text-center font-display text-2xl font-extrabold text-ink-800">How It Works</h2>
           <div className="mx-auto mt-1 h-[3px] w-24 tricolor-rule" />
 
@@ -167,7 +169,7 @@ export default function Landing() {
 
       {/* LIVE ELECTIONS */}
       <section id="elections" className="container-app pb-16">
-        <div className="card p-6">
+        <div className="card-soft p-5 sm:p-6">
           <div className="flex items-center justify-between">
             <h2 className="font-display text-xl font-extrabold text-ink-800">Live Elections</h2>
             <button onClick={() => navigate("/elections")} className="text-sm font-semibold text-leaf hover:text-leaf-600">
@@ -176,8 +178,8 @@ export default function Landing() {
           </div>
 
           {live.length === 0 ? (
-            <div className="mt-6 rounded-none border-2 border-dashed border-gray-200 bg-gray-50/60 px-6 py-10 text-center">
-              <img src={ASSETS.empty.noElections} alt="" className="mx-auto h-24 w-24 opacity-90" style={{ imageRendering: "pixelated" }} />
+            <div className="mt-6 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50/60 px-6 py-10 text-center">
+              <img src={ASSETS.empty.noElections} alt="" className="mx-auto h-44 w-44 opacity-95 sm:h-52 sm:w-52" style={{ imageRendering: "pixelated" }} />
               <p className="mt-3 font-display font-bold text-ink-800">No live elections right now</p>
               <p className="text-sm text-gray-500">Connect your wallet — new elections will appear here the moment they go live.</p>
             </div>
@@ -187,7 +189,7 @@ export default function Landing() {
                 <button
                   key={e.id}
                   onClick={() => navigate(`/vote/${e.id}`)}
-                  className="card bg-gradient-to-b from-white to-gray-50 p-5 text-left transition hover:-translate-y-0.5 hover:shadow-lift"
+                  className="card-soft bg-gradient-to-b from-white to-gray-50 p-5 text-left hover:-translate-y-0.5 hover:shadow-lift"
                 >
                   <StatusBadge status={statusOf(e)} />
                   <h3 className="mt-3 font-display text-base font-bold text-ink-800">{e.title}</h3>

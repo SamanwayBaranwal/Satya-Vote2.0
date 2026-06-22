@@ -23,7 +23,7 @@ export default function PublicNavbar() {
   const close = () => setMobileOpen(false);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-black/5 bg-white/85 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-black/5 bg-white/80 backdrop-blur-xl">
       <div className="container-app flex h-16 items-center justify-between gap-4">
         <Logo />
 
@@ -46,18 +46,18 @@ export default function PublicNavbar() {
           {isConnected && (
             <button
               onClick={() => navigate("/dashboard")}
-              className="btn-primary hidden px-4 py-2 text-sm sm:inline-flex"
+              className="btn-primary hidden !rounded-xl px-4 py-2 text-sm sm:inline-flex"
             >
               Dashboard →
             </button>
           )}
-          <div className={isConnected ? "" : "[&_button]:!bg-leaf [&_button]:!text-white"}>
+          <div className={`[&_button]:!rounded-xl ${isConnected ? "" : "[&_button]:!bg-leaf [&_button]:!text-white"}`}>
             <ConnectWalletButton label="Connect" />
           </div>
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="ripple rounded-none p-2 text-ink-700 transition hover:bg-black/5 md:hidden"
+            className="ripple rounded-xl p-2 text-ink-700 ring-1 ring-black/10 transition hover:bg-black/5 md:hidden"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
             {mobileOpen ? <Icon.X /> : <Icon.Menu />}
@@ -66,38 +66,34 @@ export default function PublicNavbar() {
       </div>
 
       {/* Mobile nav — max-h accordion slide */}
-      <div className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden ${mobileOpen ? "max-h-96" : "max-h-0"}`}>
-        <nav className="flex flex-col gap-1 border-t border-black/5 px-4 py-3">
-          {LINKS.map((l) =>
-            l.type === "anchor" ? (
-              <a
-                key={l.label}
-                href={l.to}
-                onClick={close}
-                className="rounded-none px-3 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-black/5"
-              >
+      <div className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden ${mobileOpen ? "max-h-[560px]" : "max-h-0"}`}>
+        <nav className="flex flex-col gap-1 border-t border-black/5 bg-white/95 px-3 pb-4 pt-3 backdrop-blur-xl">
+          {LINKS.map((l) => {
+            const cls =
+              "group flex items-center justify-between rounded-xl px-4 py-3 text-[15px] font-semibold text-ink-800 transition hover:bg-leaf-50 hover:text-leaf";
+            const arrow = <span className="text-gray-300 transition group-hover:translate-x-0.5 group-hover:text-leaf">→</span>;
+            return l.type === "anchor" ? (
+              <a key={l.label} href={l.to} onClick={close} className={cls}>
                 {l.label}
+                {arrow}
               </a>
             ) : (
-              <Link
-                key={l.label}
-                to={l.to}
-                onClick={close}
-                className="rounded-none px-3 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-black/5"
-              >
+              <Link key={l.label} to={l.to} onClick={close} className={cls}>
                 {l.label}
+                {arrow}
               </Link>
-            )
-          )}
+            );
+          })}
+          <div className="my-2 border-t border-black/5" />
           {isConnected ? (
             <button
               onClick={() => { navigate("/dashboard"); close(); }}
-              className="btn-primary mt-2 w-full"
+              className="btn-primary w-full !rounded-xl py-3.5 text-base"
             >
               Dashboard →
             </button>
           ) : (
-            <div className="mt-2 [&_button]:!w-full [&_button]:!bg-leaf [&_button]:!text-white">
+            <div className="[&_button]:!w-full [&_button]:!rounded-xl [&_button]:!bg-leaf [&_button]:!py-3.5 [&_button]:!text-base [&_button]:!text-white">
               <ConnectWalletButton label="Connect Wallet" />
             </div>
           )}

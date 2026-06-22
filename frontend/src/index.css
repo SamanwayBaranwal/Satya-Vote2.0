@@ -125,6 +125,11 @@
     background-repeat: no-repeat;
   }
 
+  /* Modern soft card — rounded, no corner brackets (used on marketing/landing) */
+  .card-soft {
+    @apply relative rounded-2xl bg-white shadow-[0_10px_30px_-14px_rgba(12,26,43,0.22)] ring-1 ring-black/[0.06] transition;
+  }
+
   .glass {
     @apply bg-white/70 ring-1 ring-white/55 backdrop-blur-xl;
   }

@@ -29,7 +29,7 @@ const SOCIALS = [
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-ink-900 text-white">
+    <footer className="relative overflow-hidden bg-[#0c1a2b] text-white">
       <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-leaf/60 to-transparent" />
       <div className="container-app py-12">
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-5">
